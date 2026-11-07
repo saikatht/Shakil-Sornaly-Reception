@@ -169,9 +169,59 @@ h2{letter-spacing:.015em}
   .tr{animation-delay:1s}.bl{animation-delay:2s}.br{animation-delay:3s}
 }
 
+
+/* Romantic envelope opening experience */
+body.locked{overflow:hidden}
+.opening-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 12% 15%,rgba(221,197,151,.28),transparent 34%),radial-gradient(ellipse at 88% 85%,rgba(221,193,180,.24),transparent 35%),linear-gradient(135deg,#fbf7ed,#f1e7d3 55%,#fbf7ed);transition:opacity 1.1s ease,visibility 1.1s ease}
+.opening-screen:before,.opening-screen:after{content:"❦";position:absolute;color:rgba(173,143,77,.28);font-family:Georgia,serif;font-size:clamp(90px,18vw,190px);pointer-events:none}
+.opening-screen:before{left:-25px;top:2%;transform:rotate(-28deg)}.opening-screen:after{right:-25px;bottom:1%;transform:rotate(152deg)}
+.opening-screen.is-opening{opacity:0;visibility:hidden;pointer-events:none}
+.opening-inner{width:min(92vw,560px);text-align:center;position:relative;z-index:1;padding:25px 12px}
+.opening-kicker{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:#a88b48;margin-bottom:12px}
+.opening-names{font-family:'Great Vibes',cursive;font-size:clamp(45px,9vw,72px);line-height:1.08;color:#987d3d;text-shadow:0 1px #fff;margin:0 0 22px}
+.envelope-scene{width:min(82vw,390px);height:270px;margin:0 auto 24px;position:relative;perspective:1000px;filter:drop-shadow(0 20px 24px rgba(103,81,39,.18))}
+.envelope-back{position:absolute;left:0;right:0;bottom:0;height:190px;background:linear-gradient(145deg,#e7d6ad,#c9ad6b);border:1px solid #b89a55;border-radius:4px;overflow:hidden}
+.envelope-back:before,.envelope-back:after{content:"";position:absolute;bottom:0;width:0;height:0;border-style:solid}
+.envelope-back:before{left:0;border-width:0 0 190px 195px;border-color:transparent transparent #f5ecd8 transparent}
+.envelope-back:after{right:0;border-width:190px 0 0 195px;border-color:transparent transparent transparent #efe3c8}
+.envelope-letter{position:absolute;left:8%;right:8%;bottom:22px;height:185px;background:linear-gradient(#fffefa,#f8f0df);border:1px solid #d8c48e;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px 10px;transition:transform 1s cubic-bezier(.2,.75,.25,1),bottom 1s cubic-bezier(.2,.75,.25,1);z-index:2}
+.envelope-letter:before{content:"";position:absolute;inset:8px;border:1px solid rgba(185,155,85,.55);pointer-events:none}
+.letter-small{font:600 9px Manrope,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:#a88b48}
+.letter-title{font:clamp(27px,6vw,39px) 'Cormorant Garamond',serif;color:#92783c;margin:5px 0}
+.letter-date{font:11px Manrope,sans-serif;letter-spacing:.08em;color:#827657}
+.envelope-flap{position:absolute;left:0;right:0;top:80px;height:190px;background:linear-gradient(145deg,#f4e8ce,#ddc895);clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .9s cubic-bezier(.2,.7,.2,1);z-index:4;filter:drop-shadow(0 2px 2px rgba(111,85,39,.12))}
+.envelope-front{position:absolute;left:0;right:0;bottom:0;height:190px;z-index:3;pointer-events:none;background:linear-gradient(145deg,transparent 49.5%,rgba(255,255,255,.25) 50%,transparent 50.5%)}
+.envelope-seal{position:absolute;z-index:5;left:50%;top:174px;transform:translateX(-50%);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#e7d6a6,#a98a45);border:2px solid #f8efd9;box-shadow:0 3px 9px #70552a44;color:#fff8e7;font:24px Georgia;transition:opacity .35s,transform .6s}
+.opening-screen.opening .envelope-flap{transform:rotateX(180deg);z-index:1}
+.opening-screen.opening .envelope-letter{transform:translateY(-105px);bottom:48px}
+.opening-screen.opening .envelope-seal{opacity:0;transform:translateX(-50%) scale(.5)}
+.tap-open{border:1px solid #b99b55;background:linear-gradient(135deg,#fffdf7,#f0e4c8);color:#806b32;padding:14px 30px;min-width:190px;font:600 10px Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;box-shadow:0 7px 20px rgba(128,103,48,.10);transition:all .25s}
+.tap-open:hover{background:linear-gradient(135deg,#b99d5b,#9b7c37);color:white;transform:translateY(-2px)}
+.opening-hint{font:italic 14px 'Cormorant Garamond',serif;color:#93815b;margin-top:14px}
+.music-toggle{position:fixed;right:18px;bottom:18px;z-index:1000;border:1px solid #cbb77f;border-radius:50px;background:rgba(255,253,247,.94);color:#826d36;padding:10px 14px;font:600 10px Manrope,sans-serif;letter-spacing:.08em;box-shadow:0 5px 18px rgba(80,60,20,.12);cursor:pointer;display:none}
+.music-toggle.visible{display:block}
+@media(max-width:480px){.envelope-scene{height:245px}.envelope-back,.envelope-front{height:170px}.envelope-back:before{border-width:0 0 170px 46vw}.envelope-back:after{border-width:170px 0 0 46vw}.envelope-flap{top:75px;height:170px}.envelope-seal{top:160px}.envelope-letter{height:165px}}
+@media(prefers-reduced-motion:reduce){.opening-screen,.envelope-flap,.envelope-letter,.envelope-seal{transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body>
+
+<div class="opening-screen" id="openingScreen" aria-label="Wedding invitation opening screen">
+ <div class="opening-inner">
+  <div class="opening-kicker">You are cordially invited to</div>
+  <div class="opening-names">Shakil &amp; Sornaly</div>
+  <div class="envelope-scene" aria-hidden="true">
+   <div class="envelope-letter"><div class="letter-small">Together with their families</div><div class="letter-title">Wedding Invitation</div><div class="letter-date">06 · 12 · 2026 &nbsp; | &nbsp; DHAKA</div></div>
+   <div class="envelope-back"></div><div class="envelope-flap"></div><div class="envelope-front"></div><div class="envelope-seal">♡</div>
+  </div>
+  <button class="tap-open" id="tapOpen" type="button">♡ &nbsp; Tap to open</button>
+  <div class="opening-hint">A little note, sealed with love</div>
+ </div>
+</div>
+<audio id="weddingMusic" src="romantic-piano.mp3" preload="auto" loop></audio>
+<button class="music-toggle" id="musicToggle" type="button" aria-label="Pause background music">♫ &nbsp; Music on</button>
+
 <div class="page"><main class="invitation">
 <svg class="botanical-wash" aria-hidden="true" viewBox="0 0 900 1200" preserveAspectRatio="none">
  <g fill="none" stroke="#b99b5b" stroke-width="1.15" opacity=".20">
@@ -286,6 +336,40 @@ h2{letter-spacing:.015em}
 </section>
 </div></main></div>
 <script>
+
+// Envelope opening and guest-controlled background music
+const openingScreen=document.getElementById('openingScreen');
+const tapOpen=document.getElementById('tapOpen');
+const weddingMusic=document.getElementById('weddingMusic');
+const musicToggle=document.getElementById('musicToggle');
+let musicStarted=false;
+weddingMusic.volume=0.34;
+tapOpen.addEventListener('click',async()=>{
+ if(openingScreen.classList.contains('opening')) return;
+ openingScreen.classList.add('opening');
+ document.body.classList.add('locked');
+ try{
+  await weddingMusic.play();
+  musicStarted=true;
+  musicToggle.textContent='♫  Music on';
+ }catch(err){
+  musicToggle.textContent='♫  Play music';
+ }
+ musicToggle.classList.add('visible');
+ window.setTimeout(()=>{
+  openingScreen.classList.add('is-opening');
+  document.body.classList.remove('locked');
+ },1450);
+});
+musicToggle.addEventListener('click',async()=>{
+ if(weddingMusic.paused){
+  try{await weddingMusic.play();musicToggle.textContent='♫  Music on';}
+  catch(err){musicToggle.textContent='♫  Music unavailable';}
+ }else{
+  weddingMusic.pause();musicToggle.textContent='♫  Music off';
+ }
+});
+
 const weddingDate = new Date("2026-12-06T18:00:00+06:00");
 function updateCountdown(){
  const diff = weddingDate.getTime()-Date.now();
