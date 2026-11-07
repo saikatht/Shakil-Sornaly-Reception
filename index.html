@@ -257,7 +257,73 @@ body.locked{overflow:hidden}
 }
 
 </style>
-</head>
+<style id="floral-illustration">
+.invitation { container-type: inline-size; }
+.program-section::before { content: none; }
+
+/* The original painted corners meet the frame only at the two ends of the card. */
+.invitation > .content::before,
+.invitation > .content::after {
+  content: "";
+  position: absolute;
+  left: 29px;
+  right: 29px;
+  aspect-ratio: 2 / 1;
+  z-index: -1;
+  pointer-events: none;
+  background: url("watercolor-frame.png") center top / 100% auto no-repeat;
+  mask-image: linear-gradient(to right, black 5%, rgba(0,0,0,.78) 13%, rgba(0,0,0,.14) 31%, rgba(0,0,0,.14) 69%, rgba(0,0,0,.78) 87%, black 95%);
+}
+.invitation > .content::before { top: 29px; }
+.invitation > .content::after { bottom: 29px; background-position: center bottom; }
+
+/* Each interior spray is a whole illustration with transparent margins. */
+.floral-pair {
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  width: calc(100cqw - 60px);
+  height: clamp(115px, 26cqw, 230px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+#details .floral-pair { top: 53%; }
+.dress-section .floral-pair { top: 12%; }
+.countdown-section .floral-pair,
+.program-section .floral-pair {
+  top: 40%;
+  height: clamp(76px, 18cqw, 164px);
+}
+@media (max-width: 600px) {
+  .countdown-section .floral-pair,
+  .program-section .floral-pair { top: 21%; height: 70px; }
+}
+.floral-pair::before,
+.floral-pair::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  width: 23%;
+  background: url("watercolor-sprig.png") left center / contain no-repeat;
+  opacity: .83;
+}
+.floral-pair::before { left: 0; }
+.floral-pair::after { right: 0; transform: scaleX(-1); }
+@media (max-width: 600px) {
+  .invitation > .content::before,
+  .invitation > .content::after { left: 16px; right: 16px; }
+  .invitation > .content::before { top: 16px; }
+  .invitation > .content::after { bottom: 16px; }
+  .floral-pair { width: calc(100cqw - 32px); }
+  .floral-pair::before, .floral-pair::after { width: 18%; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  body:has(.opening-screen.is-opening) .invitation > .content::before {
+    animation: watercolor-arrive 1.3s ease-out both;
+  }
+  @keyframes watercolor-arrive { from { opacity: .4; } to { opacity: 1; } }
+}
+</style></head>
 <body>
 
 <div class="opening-screen" id="openingScreen" aria-label="Reception invitation opening screen">
@@ -307,7 +373,7 @@ body.locked{overflow:hidden}
 <div class="parents">Daughter of Mr. and Mrs. Kashem</div>
 <a class="scroll" href="#details">Scroll to discover ↓</a>
 
-<section class="section" id="details">
+<section class="section" id="details"><span class="floral-pair" aria-hidden="true"></span>
 <div class="eyebrow">Please join us</div>
 <h2>The Reception Date</h2>
 <p>A day of love, joy, and the beginning of forever</p>
@@ -332,7 +398,7 @@ body.locked{overflow:hidden}
 <button class="btn" id="saveDate">♡ &nbsp; Save the date</button>
 </section>
 
-<section class="section">
+<section class="section countdown-section"><span class="floral-pair" aria-hidden="true"></span>
 <div class="eyebrow">The moment is getting closer</div>
 <h2>Counting Down to Forever</h2>
 <div class="ornament">✧</div>
@@ -344,7 +410,7 @@ body.locked{overflow:hidden}
 </div>
 </section>
 
-<section class="section">
+<section class="section program-section"><span class="floral-pair" aria-hidden="true"></span>
 <div class="eyebrow">The day's celebration</div>
 <h2>Program Timeline</h2>
 <div class="timeline">
@@ -368,7 +434,7 @@ body.locked{overflow:hidden}
 </div>
 </section>
 
-<section class="section">
+<section class="section dress-section"><span class="floral-pair" aria-hidden="true"></span>
 <div class="eyebrow">Celebrate in style</div>
 <h2>Dress Code</h2>
 <div class="dress-grid">
@@ -441,4 +507,6 @@ document.getElementById("saveDate").addEventListener("click",()=>{
  const blob=new Blob([ics],{type:"text/calendar;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="Shakil-and-Sornaly-Wedding.ics";a.click();URL.revokeObjectURL(url);
 });
 </script>
+
+
 </body></html>
